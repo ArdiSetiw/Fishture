@@ -1,43 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class QTE_System : MonoBehaviour
 {
+
+    public Inventory inventory;
+    public InventoryUI inventoryUI;
+
     public bool masuk;
     public Transform target;
     public Transform targetstart;
     public Transform targetend;
     public Slider progress;
     public GameObject win;
+    public Image WinImage;
 
-    private int FishType;
+    private FishBase fish;
     private PointerMove pointerMove;
+
+    public GameObject qte;
+    public PlayerMovement player;
+
 
     private void Start()
     {
+        WinImage.sprite = fish.image;
         pointerMove = FindObjectOfType<PointerMove>();
-        FishType = pointerMove.GetFishType();
+        fish = pointerMove.GetFish();
 
-        switch (FishType)
+        switch (fish.level)
         {
             case 0:
-                target.localScale = new Vector3(250, 25, 1);
-                break;
-            case 1:
                 target.localScale = new Vector3(200, 25, 1);
                 break;
-            case 2:
+            case 1:
                 target.localScale = new Vector3(150, 25, 1);
                 break;
-            case 3:
-                target.localScale = new Vector3(100, 25, 1);
-                break;
             default:
-                target.localScale = new Vector3(50, 25, 1);
+                target.localScale = new Vector3(150, 25, 1);
                 break;
         }
         
@@ -49,10 +54,8 @@ public class QTE_System : MonoBehaviour
         {
             progress.value -= Time.deltaTime * 0.03f;
         }
-        else
-        {
+        else {
             win.SetActive(true);
-            //SceneManager.LoadScene(3);
         }
         
         
@@ -82,7 +85,9 @@ public class QTE_System : MonoBehaviour
         if(win.activeInHierarchy) {
             if (Input.anyKeyDown)
             {
-                SceneManager.LoadScene(1);
+                qte.SetActive(false);
+                player.SetMovement(true);
+                win.SetActive(false);
             }
         }
 

@@ -13,6 +13,8 @@ public class Dialogue : MonoBehaviour
     public GameObject canvas;
     public bool akhir;
     public AudioSource audioSource;
+    public GameObject player; // Reference to the player GameObject
+    private PlayerMovement playerMovement; // Reference to the PlayerMovement script
 
     private int index;
 
@@ -22,8 +24,10 @@ public class Dialogue : MonoBehaviour
         textComponent.text = string.Empty;
         if (audioSource != null)
         {
-            audioSource.loop = true; 
+            audioSource.loop = true;
         }
+        // Get reference to the PlayerMovement script
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -51,13 +55,16 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(TypeLine());
         director = pd;
         director.Pause();
+
+        // Disable player movement at the start of dialogue
+        playerMovement.SetMovement(false);
     }
 
     IEnumerator TypeLine()
     {
         if (audioSource != null && !audioSource.isPlaying)
         {
-            audioSource.Play(); 
+            audioSource.Play();
         }
         foreach (char c in lines[index].ToCharArray())
         {
@@ -66,7 +73,7 @@ public class Dialogue : MonoBehaviour
         }
         if (audioSource != null)
         {
-            audioSource.Stop(); 
+            audioSource.Stop();
         }
     }
 
@@ -87,10 +94,13 @@ public class Dialogue : MonoBehaviour
     void EndDialogue()
     {
         if (akhir)
-        { 
+        {
             canvas.SetActive(false);
             director.Stop();
         }
         director.Resume();
+
+        // Enable player movement at the end of dialogue
+        playerMovement.SetMovement(true);
     }
 }

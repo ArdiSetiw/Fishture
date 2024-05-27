@@ -6,14 +6,19 @@ using UnityEngine.SceneManagement;
 public class FishingSpot : MonoBehaviour
 {
     private bool Spot;
-    [SerializeField] List<FishBase> Fish; 
+    public FishBase[] Fish;
+    public GameObject Fishing;
+    public PlayerMovement player;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (Spot)
             {
-                SceneManager.LoadScene(2);
+                player.SetMovement(false);
+                FishingSceneData.SetPossibleFish(Fish);
+                Fishing.SetActive(true);
             }
         }
     }

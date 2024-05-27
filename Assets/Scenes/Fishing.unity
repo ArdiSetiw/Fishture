@@ -1297,7 +1297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -2, y: 58}
-  m_SizeDelta: {x: 383.1993, y: 243.6501}
+  m_SizeDelta: {x: 600, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1425689804
 MonoBehaviour:
@@ -1388,12 +1388,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37159fcc1ddcccd45b92242139e293a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
+  inventoryUI: {fileID: 0}
   masuk: 0
   target: {fileID: 1478447884}
   targetstart: {fileID: 1293496773}
   targetend: {fileID: 776860718}
   progress: {fileID: 1022243192}
   win: {fileID: 1318158505}
+  WinImage: {fileID: 1425689804}
 --- !u!114 &1478447887
 MonoBehaviour:
   m_ObjectHideFlags: 0

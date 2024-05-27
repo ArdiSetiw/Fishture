@@ -4,46 +4,32 @@ using UnityEditor;
 using UnityEditor.Build.Content;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PointerMove : MonoBehaviour
 {
     public Transform pointer;
     public Transform pointerStart;
     public Transform pointerEnd;
-
     private float laju;
     int direction = 1;
 
+    private FishBase[] possibleFish;
     private int FishType;
+    private FishBase fish;
 
-    public int GetFishType()
+    public FishBase GetFish()
     {
-        return FishType;
+        return fish;
     }
 
     private void Start()
     {
-        FishType = Random.Range(0, 4);
+        possibleFish = FishingSceneData.GetPossibleFish();
+        FishType = Random.Range(0, possibleFish.Length);
         Debug.Log("FishType FishingSpot = " + FishType);
-
-        switch (FishType)
-        {
-            case 0:
-                laju = 1.0f;
-                break;
-            case 1:
-                laju = 1.6f;
-                break;
-            case 2:
-                laju= 1.9f; 
-                break;
-            case 3:
-                laju = 2.2f;
-                break; 
-            default:
-                laju = 2.5f;
-                break;
-        }
+        fish = possibleFish[FishType];
+        laju = fish.laju;
     }
 
     private void Update()
