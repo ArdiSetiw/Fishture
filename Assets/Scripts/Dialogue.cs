@@ -20,7 +20,10 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         textComponent.text = string.Empty;
-        audioSource.loop= true;
+        if (audioSource != null)
+        {
+            audioSource.loop = true; 
+        }
     }
 
     // Update is called once per frame
@@ -52,13 +55,19 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
-        audioSource.Play();
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.Play(); 
+        }
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-        audioSource.Stop();
+        if (audioSource != null)
+        {
+            audioSource.Stop(); 
+        }
     }
 
     void NextLine()
