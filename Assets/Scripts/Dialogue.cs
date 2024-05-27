@@ -12,6 +12,7 @@ public class Dialogue : MonoBehaviour
     private PlayableDirector director;
     public GameObject canvas;
     public bool akhir;
+    public AudioSource audioSource;
 
     private int index;
 
@@ -19,6 +20,7 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         textComponent.text = string.Empty;
+        audioSource.loop= true;
     }
 
     // Update is called once per frame
@@ -34,6 +36,7 @@ public class Dialogue : MonoBehaviour
             {
                 StopAllCoroutines();
                 textComponent.text = lines[index];
+                audioSource.Stop();
             }
 
         }
@@ -49,11 +52,13 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
+        audioSource.Play();
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+        audioSource.Stop();
     }
 
     void NextLine()
